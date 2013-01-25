@@ -114,11 +114,6 @@ public class WorldRenderer {
 		Particle particle = this.world.particle;
 		Trap trap = (Trap) this.world.trap;
 
-		// TODO move this to particle.update()
-		// update its position using tween engine
-		particle.update(delta);
-		trap.update(delta);
-		
 		// render shape
 		shapeRenderer.begin(ShapeType.Rectangle);
 			shapeRenderer.rect(particle.shape.x, particle.shape.y, particle.shape.width, particle.shape.height);
