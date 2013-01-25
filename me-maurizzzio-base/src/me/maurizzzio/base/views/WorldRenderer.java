@@ -7,10 +7,13 @@ import me.maurizzzio.base.models.World;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class WorldRenderer {
 
@@ -22,7 +25,7 @@ public class WorldRenderer {
 	/**
 	 * Camera used in this renderer
 	 */
-	private OrthographicCamera camera;
+	public static OrthographicCamera camera;
 	
 	/**
 	 * Debug shape used for rendering
@@ -34,7 +37,7 @@ public class WorldRenderer {
 	 * 			debugShape.rect(x, y, width, height);				// draw a rectangle at (x, y)
 	 * 		debugShape.end();										// end render process
 	 */
-	private ShapeRenderer debugShape;
+	private ShapeRenderer shapeRenderer;
 	
 	/**
 	 * Sprite batch used to render textures
@@ -55,12 +58,16 @@ public class WorldRenderer {
 	private AssetManager assetManager;
 	
 	/**
-	 * Instance of the class TweenManager
+	 * Instance of the class TweenManager (static)
 	 */
-	private TweenManager tweenManager;
+	public static TweenManager tweenManager;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
+		
+		// *** spriteBatch ***
+		spriteBatch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
 		
 		// *** TweenEngine ***
 		this.tweenManager = new TweenManager();
@@ -69,9 +76,9 @@ public class WorldRenderer {
 		
 		// *** Camera ***
 		// create the instance of OrthographicCamera(width, height) of the view port
-		this.camera = new OrthographicCamera(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+		this.camera = new OrthographicCamera(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
 		// center the camera
-		this.camera.position.set(Constants.GAME_WIDTH / 2f, Constants.GAME_HEIGHT / 2f, 0f);		
+		this.camera.position.set(Constants.CAMERA_WIDTH / 2f, Constants.CAMERA_HEIGHT / 2f, 0f);		
 		// camera's values have been updated, so update the camera
 		this.camera.update();
 		
@@ -79,6 +86,7 @@ public class WorldRenderer {
 		// load assets
 		this.assetManager = new AssetManager();
 		loadAssets();
+				
 	}
 	
 	private void loadAssets() {
@@ -86,11 +94,38 @@ public class WorldRenderer {
 	}
 
 	public void render(float delta) {
+		// initialize the camera, the sprite batch and the shapeRenderer
+		initCamera();
+		
 		// render logic goes here...
+		renderParticle(delta);
 		
 		// tween interpolations go here..
 		
 		// finally update the tween manager
 		tweenManager.update(delta);
+	}
+
+	private void renderParticle(float delta) {
+		// TODO Auto-generated method stub
+		Particle particle = this.world.particle;
+
+		// TODO move this to particle.update()
+		// update its position using tween engine
+		particle.update(delta);
+		
+		// render shape
+		shapeRenderer.begin(ShapeType.Rectangle);
+			shapeRenderer.rect(particle.shape.x, particle.shape.y, particle.shape.width, particle.shape.height);
+		shapeRenderer.end();
+	}
+	
+	private void initCamera () {
+		// update camera here...
+		
+		// the debugger uses the same projection matrix as the camera
+		shapeRenderer.setProjectionMatrix(camera.combined);
+//		spriteBatch.getProjectionMatrix().setToOrtho2D(0f, 0, Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);				
+//		Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 	}
 }

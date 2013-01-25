@@ -8,8 +8,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "me-maurizzzio-base";
 		cfg.useGL20 = false;
-		cfg.width = 480;
-		cfg.height = 320;
+		cfg.width = (int) Constants.SCREEN_WIDTH;
+		cfg.height = (int) Constants.SCREEN_HEIGHT;
 		
 		new LwjglApplication(new GdxGame(), cfg);
 	}
