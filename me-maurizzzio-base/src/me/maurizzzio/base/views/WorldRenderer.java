@@ -3,13 +3,13 @@ package me.maurizzzio.base.views;
 import me.maurizzzio.base.Constants;
 import me.maurizzzio.base.models.Particle;
 import me.maurizzzio.base.models.ParticleAccesor;
+import me.maurizzzio.base.models.Trap;
+import me.maurizzzio.base.models.TrapAccesor;
 import me.maurizzzio.base.models.World;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -60,7 +60,8 @@ public class WorldRenderer {
 	/**
 	 * Instance of the class TweenManager (static)
 	 */
-	public static TweenManager tweenManager;
+	public static TweenManager tweenParticle;
+	public static TweenManager tweenTrap;
 	
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -70,9 +71,11 @@ public class WorldRenderer {
 		shapeRenderer = new ShapeRenderer();
 		
 		// *** TweenEngine ***
-		this.tweenManager = new TweenManager();
+		WorldRenderer.tweenParticle = new TweenManager();
+		WorldRenderer.tweenTrap = new TweenManager();
 		// register the class Particle and its accesor
 		Tween.registerAccessor(Particle.class, new ParticleAccesor());
+		Tween.registerAccessor(Trap.class, new TrapAccesor());
 		
 		// *** Camera ***
 		// create the instance of OrthographicCamera(width, height) of the view port
@@ -103,20 +106,23 @@ public class WorldRenderer {
 		// tween interpolations go here..
 		
 		// finally update the tween manager
-		tweenManager.update(delta);
+		tweenParticle.update(delta);
 	}
 
 	private void renderParticle(float delta) {
 		// TODO Auto-generated method stub
 		Particle particle = this.world.particle;
+		Trap trap = (Trap) this.world.trap;
 
 		// TODO move this to particle.update()
 		// update its position using tween engine
 		particle.update(delta);
+		trap.update(delta);
 		
 		// render shape
 		shapeRenderer.begin(ShapeType.Rectangle);
 			shapeRenderer.rect(particle.shape.x, particle.shape.y, particle.shape.width, particle.shape.height);
+			shapeRenderer.rect(trap.shape.x, trap.shape.y, trap.shape.width, trap.shape.height);
 		shapeRenderer.end();
 	}
 	

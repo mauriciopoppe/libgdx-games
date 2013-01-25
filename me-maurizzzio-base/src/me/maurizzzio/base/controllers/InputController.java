@@ -4,11 +4,16 @@ import me.maurizzzio.base.Constants;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 
 public class InputController implements InputProcessor {
 
 	private static InputController instance = null;
 	
+	public static boolean up = false;
+	public static boolean down = false;
+	public static boolean left = false;
+	public static boolean right = false;
 	public static boolean screenTouched = false;
 	public static int X = 0;
 	public static int Y = 0;
@@ -28,13 +33,41 @@ public class InputController implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
-		Gdx.app.log("keyDown", keycode + "");
+		switch (keycode) {
+			case Keys.UP:
+				up = true;
+				break;
+			case Keys.DOWN:
+				down = true;
+				break;
+			case Keys.LEFT:
+				left = true;
+				break;
+			case Keys.RIGHT:
+				right = true;
+				break;
+		}
+//		Gdx.app.log("keyDown", keycode + "");
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
 		// TODO Auto-generated method stub
+		switch (keycode) {
+			case Keys.UP:
+				up = false;
+				break;
+			case Keys.DOWN:
+				down = false;
+				break;
+			case Keys.LEFT:
+				left = false;
+				break;
+			case Keys.RIGHT:
+				right = false;
+				break;
+		}
 		return false;
 	}
 

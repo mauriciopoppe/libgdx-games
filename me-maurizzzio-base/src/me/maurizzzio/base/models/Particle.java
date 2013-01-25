@@ -18,6 +18,8 @@ public class Particle extends Base{
 		// TODO Auto-generated method stub
 		if (Gdx.input.justTouched()) {
 			
+			Gdx.app.log("update", "Screen touched");
+			
 			// InputController.X and InputController.Y are screen relative	
 			Tween.to(this, ParticleAccesor.POSITION_XY, 0.5f)
 			 .target(
@@ -26,8 +28,8 @@ public class Particle extends Base{
 			  )
 			 .ease(Elastic.INOUT)
 //			 .delay(1f)
-//			 .repeatYoyo(2, 0.5f)
-			 .start(WorldRenderer.tweenManager);
+			 .repeatYoyo(1, 0.5f)
+			 .start(WorldRenderer.tweenParticle);
 		}
 	}
 	
