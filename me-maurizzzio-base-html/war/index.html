@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<title>me-maurizzzio-base</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<style>
+			canvas {
+				cursor: default;
+				outline: none;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div align="center" id="embed-me.maurizzzio.base.GwtDefinition"></div>
+		<script type="text/javascript" src="me.maurizzzio.base.GwtDefinition/me.maurizzzio.base.GwtDefinition.nocache.js"></script>
+	</body>
+	
+	<script>
+		function handleMouseDown(evt) {
+		  evt.preventDefault();
+		  evt.stopPropagation();
+		  evt.target.style.cursor = 'default';
+		}
+		
+		function handleMouseUp(evt) {
+		  evt.preventDefault();
+		  evt.stopPropagation();
+		  evt.target.style.cursor = '';
+		}
+		
+		document.getElementById('embed-me.maurizzzio.base.GwtDefinition').addEventListener('mousedown', handleMouseDown, false);
+		document.getElementById('embed-me.maurizzzio.base.GwtDefinition').addEventListener('mouseup', handleMouseUp, false);
+	</script>
+</html>
