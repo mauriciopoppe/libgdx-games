@@ -41,12 +41,16 @@ public class InputController implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		// TODO Auto-generated method stub
+		// IMPORTANT! top left corner is 0, 0
+		Gdx.app.log("touchDown", screenX + " " + screenY);
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		// TODO Auto-generated method stub
+		// IMPORTANT! top left corner is 0, 0
+		Gdx.app.log("touchUp", screenX + " " + screenY);
 		return false;
 	}
 
